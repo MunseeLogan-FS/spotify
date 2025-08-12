@@ -14,9 +14,9 @@ The project demonstrates:
 Before running the project, ensure you have:
 
 - **Node.js**: v18 or later
-- **npm**: v16 or later
+- **npm**: v10 or later
 - **Spotify Developer Account**: [Create one here](https://developer.spotify.com/dashboard)
-- **Docker(optional)**: v20 or later
+- **Docker(optional)**: v28 or later
 
 ---
 
