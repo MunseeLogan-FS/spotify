@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Spotify is a Node.js application that uses the Spotify Web API to authenticate users via OAuth 2.0 and allow them to interact with their Spotify account.  
+This Spotify like project is a Node.js application that uses the Spotify Web API to authenticate users via OAuth 2.0 and allow them to interact with their Spotify account.  
 The project demonstrates:
 
 - Secure OAuth login with Spotify
@@ -27,6 +27,7 @@ Before running the project, ensure you have:
 ```bash
 git clone https://github.com/MunseeLogan-FS/spotify.git
 cd spotify
+npm install
 ```
 
 ### 2. .env setup
