@@ -54,3 +54,13 @@ To start the server run:
 ```bash
 npm run dev
 ```
+
+## Links
+
+Here are some important URLs related to the project when running locally:
+
+<!-- - **Frontend (if applicable):** http://localhost:3000 -->
+
+- **Backend API:** http://localhost:3001 (or the port your Express app runs on)
+
+- **Deployed App** https://spotify-project-d1c7ecedaee7.herokuapp.com/
