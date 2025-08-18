@@ -9,6 +9,12 @@ The project demonstrates:
 - Environment variable management for sensitive credentials
 - RESTful API structure using Express
 
+### Features to be Added
+
+- **Search Function** – Users will be able to search for items from Spotify.
+- **User Content Access** – Fetch and display a user’s artists, albums, and playlists.
+- These features will give users quick access to the essentials for enjoying their music.
+
 ## Prerequisites
 
 Before running the project, ensure you have:
