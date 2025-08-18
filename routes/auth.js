@@ -7,3 +7,5 @@ module.exports = router;
 
 router.post("/login", authController.login);
 // more routes may be added here
+
+module.exports = router;
