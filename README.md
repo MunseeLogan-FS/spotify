@@ -22,6 +22,7 @@ Before running the project, ensure you have:
 - **Node.js**: v18 or later
 - **npm**: v10 or later
 - **Spotify Developer Account**: [Create one here](https://developer.spotify.com/dashboard)
+- **MongoDB Compass**: V1.4 or later
 - **Docker(optional)**: v28 or later
 
 ---
@@ -69,5 +70,6 @@ Here are some important URLs related to the project when running locally:
 <!-- - **Frontend (if applicable):** http://localhost:3000 -->
 
 - **Backend API:** http://localhost:3001 (or the port your Express app runs on)
+- **Database:** http://localhost:27017 (or the port your database runs on)
 
 - **Deployed App** https://spotify-project-d1c7ecedaee7.herokuapp.com/

@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// import routes from "./routes/routes.js";
+import routes from "./routes/routes.js";
 import authRouter from "./routes/auth.js";
 
 // Connect to MongoDB
@@ -25,6 +25,7 @@ app.use(express.json());
 
 // app.use("/api/v1/content", routes);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/content", routes);
 
 // Basic route
 app.get("/", (req, res) => {
