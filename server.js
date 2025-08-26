@@ -1,15 +1,29 @@
 import express from "express";
 import "dotenv/config";
+import mongoose from "mongoose";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const routes = require("./routes/routes");
-const authRouter = require("./routes/auth");
+// import routes from "./routes/routes.js";
+import authRouter from "./routes/auth.js";
+
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+  });
 
 app.use(express.json());
 
-app.use("/api/v1/content", routes);
+// app.use("/api/v1/content", routes);
 app.use("/api/v1/auth", authRouter);
 
 // Basic route

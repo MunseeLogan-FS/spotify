@@ -1,8 +1,8 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const router = Router();
 
-const contentController = require("../controllers/content_controller");
+import { getAllContent } from "../controllers/content_controller";
 
-router.get("/", contentController.getAllContent);
+router.get("/", getAllContent);
 // more routes may be added here
-module.exports = router;
+export default router;
