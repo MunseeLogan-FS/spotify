@@ -3,7 +3,7 @@ import querystring from "querystring";
 import User from "../models/users.js";
 
 const client_id = process.env.CLIENT_ID;
-const redirect_uri = "http://127.0.0.1:3001/api/v1/auth/callback";
+const redirect_uri = process.env.REDIRECT_URI;
 
 export const login = (req, res) => {
   const state = generateRandomString(16);
