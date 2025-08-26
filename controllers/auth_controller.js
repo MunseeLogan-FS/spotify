@@ -1,5 +1,3 @@
-// This is where the auth controller is defined. It handles authentication routes.
-// auth_controller.js
 import { generateRandomString } from "../utils/utils.js";
 import querystring from "querystring";
 import User from "../models/users.js";
