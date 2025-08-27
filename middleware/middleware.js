@@ -4,7 +4,7 @@ import User from "../models/users.js"; // mongoose model
 const spotifyAuth = async (req, res, next) => {
   console.log("test:", req.params);
   try {
-    const userId = req.params.id; // depends on your auth system
+    const userId = req.params.id;
     const user = await User.findById(userId);
     if (!user) return res.status(401).json({ error: "User not found" });
     console.log(Date.now() < user.tokenExpiresAt.getTime());
@@ -39,7 +39,7 @@ const spotifyAuth = async (req, res, next) => {
 
     // update DB
     user.accessToken = access_token;
-    user.expiresAt = new Date(Date.now() + expires_in * 1000);
+    user.tokenExpiresAt = new Date(Date.now() + expires_in * 1000);
 
     await user.save();
 
