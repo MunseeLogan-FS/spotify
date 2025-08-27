@@ -98,7 +98,7 @@ export const callback = async (req, res) => {
     await user.save();
 
     // Redirect to frontend with tokens (Currently not redirecting due to no frontend at the moment)
-    res.redirect("http://localhost:3001/#");
+    res.redirect(redirect_uri);
   } catch (error) {
     console.error("Error during Spotify callback:", error);
     res.redirect(
