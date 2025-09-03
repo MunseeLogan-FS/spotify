@@ -7,7 +7,8 @@ const redirect_uri = process.env.REDIRECT_URI;
 
 export const login = (req, res) => {
   const state = generateRandomString(16);
-  const scope = "user-read-private user-read-email";
+  const scope =
+    "user-read-private user-read-email user-library-read user-follow-read";
 
   res.redirect(
     "https://accounts.spotify.com/authorize?" +
@@ -25,6 +26,8 @@ export const callback = async (req, res) => {
   console.log("callback");
   const code = req.query.code || null;
   const state = req.query.state || null;
+
+  console.log("state:", state);
 
   if (state === null) {
     console.error("State mismatch");
@@ -59,9 +62,26 @@ export const callback = async (req, res) => {
       }
     );
 
+    if (!tokenResponse.ok) {
+      const errorText = await tokenResponse.text();
+      console.error(
+        "HTTP error fetching token:",
+        tokenResponse.status,
+        errorText
+      );
+      res.redirect(
+        "/#" +
+          querystring.stringify({
+            error: "invalid_token",
+          })
+      );
+      return;
+    }
+
     const tokenData = await tokenResponse.json();
 
     if (tokenData.error) {
+      console.error("Error fetching token:", tokenData.error);
       res.redirect(
         "/#" +
           querystring.stringify({
@@ -79,6 +99,18 @@ export const callback = async (req, res) => {
     const profileResponse = await fetch("https://api.spotify.com/v1/me", {
       headers: { Authorization: "Bearer " + access_token },
     });
+
+    if (!profileResponse.ok) {
+      console.error("Error fetching user profile:", profileResponse.statusText);
+      res.redirect(
+        "/#" +
+          querystring.stringify({
+            error: "profile_fetch_error",
+          })
+      );
+      return;
+    }
+
     const profileData = await profileResponse.json();
 
     // Save or update user in the database
@@ -98,7 +130,7 @@ export const callback = async (req, res) => {
     await user.save();
 
     // Redirect to frontend with tokens (Currently not redirecting due to no frontend at the moment)
-    res.redirect(redirect_uri);
+    res.redirect(process.env.FRONTEND_URI);
   } catch (error) {
     console.error("Error during Spotify callback:", error);
     res.redirect(

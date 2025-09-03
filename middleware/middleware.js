@@ -7,7 +7,7 @@ const spotifyAuth = async (req, res, next) => {
     const userId = req.params.id;
     const user = await User.findById(userId);
     if (!user) return res.status(401).json({ error: "User not found" });
-    console.log(Date.now() < user.tokenExpiresAt.getTime());
+    // console.log(Date.now() < user.tokenExpiresAt.getTime());
 
     // if access token still valid
     if (Date.now() < user.tokenExpiresAt.getTime()) {
