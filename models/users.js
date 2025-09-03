@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     refreshToken: String,
     tokenExpiresAt: Date,
   },
-  { collection: "spotify" }
+  { database: "spotify" }
 );
 
 export default mongoose.model("User", userSchema);
