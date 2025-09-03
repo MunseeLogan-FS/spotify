@@ -10,9 +10,8 @@ import authRouter from "./routes/auth.js";
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("MongoDB connected");
+  .connect(process.env.MONGODB_URI, {
+    dbName: "spotify",
   })
   .catch((err) => {
     console.error("MongoDB connection error:", err);
