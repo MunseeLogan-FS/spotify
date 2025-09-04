@@ -23,11 +23,11 @@ export const login = (req, res) => {
 };
 
 export const callback = async (req, res) => {
-  console.log("callback");
+  // console.log("callback");
   const code = req.query.code || null;
   const state = req.query.state || null;
 
-  console.log("state:", state);
+  // console.log("state:", state);
 
   if (state === null) {
     console.error("State mismatch");
@@ -41,7 +41,7 @@ export const callback = async (req, res) => {
   }
 
   try {
-    console.log("callback fetch");
+    // console.log("callback fetch");
     const tokenResponse = await fetch(
       "https://accounts.spotify.com/api/token",
       {
@@ -79,6 +79,7 @@ export const callback = async (req, res) => {
     }
 
     const tokenData = await tokenResponse.json();
+    // console.log(tokenResponse);
 
     if (tokenData.error) {
       console.error("Error fetching token:", tokenData.error);
@@ -129,8 +130,16 @@ export const callback = async (req, res) => {
     }
     await user.save();
 
+    res.cookie("sessionId", profileData.id.toString(), {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      domain: "127.0.0.1",
+    });
+
     // Redirect to frontend with tokens (Currently not redirecting due to no frontend at the moment)
     res.redirect(process.env.FRONTEND_URI);
+    // res.redirect("http://127.0.0.1:3001");
   } catch (error) {
     console.error("Error during Spotify callback:", error);
     res.redirect(

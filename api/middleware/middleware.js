@@ -1,11 +1,39 @@
 import axios from "axios";
-import User from "../models/users.js"; // mongoose model
+import User from "../models/users.js";
 
-const spotifyAuth = async (req, res, next) => {
-  console.log("test:", req.params);
+export const requireAuth = async (req, res, next) => {
+  console.log("checking authentication");
+  // console.log("sessionId:", req.cookies);
   try {
-    const userId = req.params.id;
-    const user = await User.findById(userId);
+    const sessionId = req.cookies.sessionId;
+
+    if (!sessionId) {
+      console.log("No session cookie, redirecting to login");
+      // return res.redirect("/api/v1/auth/login");
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const user = await User.findOne({ spotifyId: sessionId });
+    if (!user) {
+      console.log("Invalid session cookie, redirecting to login");
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    // Attach user to request for later middleware/handlers
+
+    req.user = user;
+
+    next();
+  } catch (err) {
+    console.error("Auth check error:", err);
+    res.status(401).json({ error: "Unauthorized" });
+  }
+};
+
+export const spotifyAuth = async (req, res, next) => {
+  console.log("checking Spotify token");
+  try {
+    const user = req.user;
     if (!user) return res.status(401).json({ error: "User not found" });
     // console.log(Date.now() < user.tokenExpiresAt.getTime());
 
@@ -50,5 +78,3 @@ const spotifyAuth = async (req, res, next) => {
     res.status(401).json({ error: "Failed to refresh Spotify token" });
   }
 };
-
-export default spotifyAuth;

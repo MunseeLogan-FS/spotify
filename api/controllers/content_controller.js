@@ -3,7 +3,7 @@
 export const myAccount = async (req, res) => {
   try {
     const token = req.spotifyToken;
-    console.log(token);
+
     const user = await fetch("https://api.spotify.com/v1/me", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
