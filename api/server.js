@@ -15,6 +15,10 @@ app.use(
 
 app.use(cookieParser());
 const PORT = process.env.PORT || 3001;
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 import routes from "./routes/routes.js";
 import authRouter from "./routes/auth.js";
@@ -41,5 +45,5 @@ app.get("/", (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on ${process.env.BACKEND_URI}:${PORT}`);
+  console.log(`Server running on ${process.env.BACKEND_URI}`);
 });
