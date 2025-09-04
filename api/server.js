@@ -15,10 +15,6 @@ app.use(
 
 app.use(cookieParser());
 const PORT = process.env.PORT || 3001;
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
 
 import routes from "./routes/routes.js";
 import authRouter from "./routes/auth.js";
@@ -41,6 +37,11 @@ app.use("/api/v1/content", routes);
 // Basic route
 app.get("/", (req, res) => {
   res.send("Welcome to the Spotify API Server!");
+});
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
 });
 
 // Start server
