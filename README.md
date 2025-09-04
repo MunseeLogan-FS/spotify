@@ -92,7 +92,7 @@ npm run dev
 
 ## Important URLs
 
-- **Frontend:** http://127.0.0.1:5173
-- **Backend API:** http://127.0.0.1:3001
-- **Database:** http://localhost:27017
-- **Deployed App:** https://spotify-project-d1c7ecedaee7.herokuapp.com/
+- **Frontend:** http://127.0.0.1:5173 || https://myspotapp.netlify.app/
+- **Backend API:** http://127.0.0.1:3001 || https://spotify-project-d1c7ecedaee7.herokuapp.com/
+- **Database:** http://localhost:27017 || Atlas
+- **Deployed App:** https://spotify-project-d1c7ecedaee7.herokuapp.com/ && https://myspotapp.netlify.app/
