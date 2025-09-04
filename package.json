@@ -4,7 +4,8 @@
   "description": "Full-stack Spotify-like app using Node.js (Express) for the backend and Svelte + Vite for the frontend.",
   "main": "index.js",
   "scripts": {
-    "start": "npm start --prefix api"
+    "start": "npm start --prefix api",
+    "heroku-postbuild": "npm install --prefix api"
   },
   "repository": {
     "type": "git",
