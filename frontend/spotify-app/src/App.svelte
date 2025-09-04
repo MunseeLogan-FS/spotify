@@ -46,6 +46,6 @@
     <button on:click={login}>Login with Spotify</button>
   {:else if userData}
     <p>Welcome, {userData.display_name}!</p>
-    <pre>{JSON.stringify(userData, null, 2)}</pre>
+    <pre>{JSON.stringify(userData.country, null, 2)}</pre>
   {/if}
 </main>
