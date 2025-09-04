@@ -32,7 +32,7 @@
   });
 
   const login = () => {
-    window.location.href = "/api/v1/auth/login";
+    window.location.href = "http://127.0.0.1:3001/api/v1/auth/login";
   };
 </script>
 
