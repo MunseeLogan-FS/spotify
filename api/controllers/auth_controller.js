@@ -132,9 +132,9 @@ export const callback = async (req, res) => {
 
     res.cookie("sessionId", profileData.id.toString(), {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      domain: "127.0.0.1",
+      secure: true,
+      sameSite: "none",
+      // domain: "127.0.0.1",
     });
 
     // Redirect to frontend with tokens (Currently not redirecting due to no frontend at the moment)

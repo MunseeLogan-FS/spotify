@@ -1,6 +1,8 @@
 <script>
   import { onMount } from "svelte";
-  const API_URL = `http://127.0.0.1:3001/api/v1`;
+  // const API_URL = `http://127.0.0.1:3001/api/v1`;
+  const API_URL = `https://spotify-project-d1c7ecedaee7.herokuapp.com/api/v1`;
+
 
   let userData = null;
   let trackData = [];
@@ -36,6 +38,11 @@
       playlistData = await playlistsRes.json();
       albumData = await albumsRes.json();
       artistData = await artistsRes.json();
+      trackData = trackData.items;
+      playlistData = playlistData.items;
+      albumData = albumData.items;
+      artistData = artistData.artists.items;
+      console.log(albumData);
 
     } catch (err) {
       console.error("Error fetching user data:", err);
@@ -63,49 +70,99 @@
     </section>
 
     <div class="grid-container">
-      <section class="grid-item">
-        <h3>Tracks</h3>
-        <ul>
-          {#each trackData as track}
-            <li>{track.name} - {track.artists.map(a => a.name).join(", ")}</li>
+        <section class="grid-item">
+          <h3>My Tracks</h3>
+            {#if trackData && trackData.length > 0}
+              <ul>
+            {#each trackData as item}
+        <li>
+          "{item.track.name}" 
+          {#each item.track.artists as artist, i}
+            {artist.name}{i < item.track.artists.length - 1 ? ', ' : ''}
           {/each}
-        </ul>
+        </li>
+      {/each}
+    </ul>
+  {:else}
+    <p>No tracks found.</p>
+  {/if}
+</section>
+
+      <section class="grid-item">
+        <h3>My Playlists</h3>
+             {#if playlistData && playlistData.length > 0}
+              <ul>
+            {#each playlistData as item}
+        <li>
+          "{item.name}" 
+          {#each item.artists as artist, i}
+            {artist.name}{i < item.artists.length - 1 ? ', ' : ''}
+          {/each}
+        </li>
+      {/each}
+    </ul>
+  {:else}
+    <p>No tracks found.</p>
+  {/if}
       </section>
 
       <section class="grid-item">
-        <h3>Playlists</h3>
-        <ul>
-          {#each playlistData as playlist}
-            <li>{playlist.name}</li>
+        <h3>My Albums</h3>
+              {#if albumData && albumData.length > 0}
+              <ul>
+            {#each albumData as item}
+        <li>
+          "{item.album.name}" 
+          {#each item.artists as artist, i}
+            {artist.name}{i < item.artists.length - 1 ? ', ' : ''}
           {/each}
-        </ul>
+        </li>
+      {/each}
+    </ul>
+  {:else}
+    <p>No tracks found.</p>
+  {/if}
       </section>
 
       <section class="grid-item">
-        <h3>Albums</h3>
-        <ul>
-          {#each albumData as album}
-            <li>{album.name} - {album.artists.map(a => a.name).join(", ")}</li>
+        <h3>My Artists</h3>
+              {#if artistData && artistData.length > 0}
+              <ul>
+            {#each artistData as item}
+        <li>
+          "{item.name}" 
+          {#each item.artists as artist, i}
+            {artist.name}{i < item.artists.length - 1 ? ', ' : ''}
           {/each}
-        </ul>
-      </section>
-
-      <section class="grid-item">
-        <h3>Artists</h3>
-        <ul>
-          {#each artistData as artist}
-            <li>{artist.name}</li>
-          {/each}
-        </ul>
+        </li>
+      {/each}
+    </ul>
+  {:else}
+    <p>No tracks found.</p>
+  {/if}
       </section>
     </div>
   {/if}
 </main>
 
 <style>
+  :root {
+    --bg-main: #181818;
+    --bg-card: #242424;
+    --text-main: #fff;
+    --text-secondary: #b3b3b3;
+    --accent: #1db954;
+    --accent-hover: #17a44d;
+    --shadow: 0 4px 12px rgba(0,0,0,0.32);
+    --shadow-hover: 0 6px 18px rgba(0,0,0,0.44);
+  }
+
   main {
     font-family: Arial, sans-serif;
     padding: 2rem;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
   }
 
   .user-info {
@@ -120,50 +177,76 @@
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .user-info h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-main);
   }
 
   .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
   }
 
   .grid-item {
-    background: #f5f5f5;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    background: var(--bg-card);
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
     max-height: 400px;
     overflow-y: auto;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .grid-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
   }
 
   .grid-item h3 {
     margin-top: 0;
-    margin-bottom: 0.5rem;
-    color: #1db954; /* Spotify green */
+    margin-bottom: 0.8rem;
+    color: var(--accent);
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.3rem;
   }
 
-  .grid-item ul {
+  ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
   }
 
-  .grid-item li {
-    margin-bottom: 0.5rem;
+  li {
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
   }
 
   button {
-    background-color: #1db954;
-    color: white;
+    background-color: var(--accent);
+    color: var(--text-main);
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+    transition: background-color 0.2s ease;
   }
 
   button:hover {
-    background-color: #17a44d;
+    background-color: var(--accent-hover);
+  }
+
+  p {
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
   }
 </style>
