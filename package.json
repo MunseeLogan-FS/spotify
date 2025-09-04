@@ -1,0 +1,20 @@
+{
+  "name": "my-spotify-app",
+  "version": "1.0.0",
+  "description": "Full-stack Spotify-like app using Node.js (Express) for the backend and Svelte + Vite for the frontend.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm start --prefix api",
+    "heroku-postbuild": "npm install --prefix api && npm run build --prefix api"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MunseeLogan-FS/spotify.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MunseeLogan-FS/spotify/issues"
+  },
+  "homepage": "https://github.com/MunseeLogan-FS/spotify#readme"
+}
