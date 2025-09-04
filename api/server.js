@@ -38,10 +38,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Spotify API Server!");
 });
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
 
 // Start server
 app.listen(PORT, () => {
